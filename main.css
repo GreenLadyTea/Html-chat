@@ -2,3 +2,8 @@ h1 {
     color: #a2a2a2;
 }
 
+body{
+    background-image: url(chat_background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}

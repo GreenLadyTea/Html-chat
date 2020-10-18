@@ -4,20 +4,18 @@
   <meta charset="UTF-8">
   <title>Чат</title>
   <link rel="stylesheet" type="text/css" href="main.css"/>
-  <script type="text/javascript" src="main.js"></script>
-  <script type="text/javascript" src="app.js"></script>
+
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel" src="Message.js"></script>
+  <script type="text/babel" src="MessagesList.js"></script>
+  <script type="text/babel" src="Form.js"></script>
+  <script type="text/babel" src="App.js"></script>
+  <script type="text/babel" src="main.js"></script>
 </head>
 <body>
-<h1>Чат</h1>
-<form>
-  <input class="nickname" type="text" id="nick"/>
-  <br/>
-  <textarea id="message"></textarea>
-  <br/>
-  <input type="text" id="element"/>
-  <br/>
-  <input type="button" id="button" value="отправить"/>
-</form>
-<div id="messages"></div>
+  <div id="root"></div>
 </body>
 </html>
