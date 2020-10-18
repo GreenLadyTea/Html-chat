@@ -1,45 +1,35 @@
 const URL = 'http://localhost:3000';
 
-class App{
-    constructor(){
-        this.button = document.getElementById('button');
-        this.nick = document.getElementById('nick');
-        this.message = document.getElementById('message');
-        this.messages = document.getElementById('messages');
-        this.element = document.getElementById('element');
+class App extends React.Component
+{
+    constructor()
+    {
+        super();
 
-        this.postMessage = this.postMessage.bind(this);
-        this.getMessages = this.getMessages.bind(this);
-        this.drawMessages = this.drawMessages.bind(this);
+        this.state =
+            {
+                serverMessages: []
+            };
 
-        setInterval(this.getMessages, 1000);
-
-        this.button.addEventListener('click', this.postMessage);
-
-        this.serverMessages = [];
+        setInterval(this.getMessages.bind(this), 1000);
     }
 
-    postMessage()
+    postMessage(newMessage)
     {
-        if(this.nick.value === '' || this.message.value === '') {
-            alert('Поле не может быть пустым!');
-            return;
-        }
         let xhr = new XMLHttpRequest();
 
         xhr.open('POST', URL);
         xhr.send(JSON.stringify(
             {
-                nick: this.nick.value,
-                message: this.message.value,
-                element: this.element.value
+                nick: newMessage.nick,
+                message: newMessage.message
             }));
 
         xhr.onload = () => {
             if (xhr.status !== 200) {
                 console.error('Ошибка!');
             } else {
-                this.drawMessages(xhr.response);
+                this.parseMessages(xhr.response);
             }
         };
 
@@ -55,25 +45,30 @@ class App{
         xhr.send();
         xhr.onload = () =>
         {
-            if (xhr.status != 200)
+            if (xhr.status !== 200)
             {
                 console.error('Ошибка!');
             } else {
-                    this.drawMessages(xhr.response);
+                    this.parseMessages(xhr.response);
             }
         };
     }
 
-    drawMessages(response){
+    parseMessages(response)
+    {
         const newServerMessages = JSON.parse(response);
-        const existingIds = this.serverMessages.map(message => message.id);
-
-        for (let serverMessage of newServerMessages)
-        {
-            if (!existingIds.includes(serverMessage.id)) {
-                this.messages.innerHTML += `<ul><b>${serverMessage.nick}:</b> ${serverMessage.message}$<br/>${serverMessage.element}</ul>`;
-            }
-        }
-        this.serverMessages = newServerMessages;
+        this.setState({
+            serverMessages: newServerMessages
+        })
     }
+
+    render()
+    {
+        const {serverMessages} = this.state;
+        return <>
+            <h1>Чат</h1>
+            <Form postMessage={(newMessage) => this.postMessage(newMessage)}/>
+            <MessagesList messages={serverMessages}/>
+        </>
+     }
 }

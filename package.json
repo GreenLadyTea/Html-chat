@@ -1,0 +1,38 @@
+{
+  "name": "html-chat",
+  "version": "1.0.0",
+  "description": "testik chatika",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmitryweiner/html-chat.git"
+  },
+  "author": "mk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmitryweiner/html-chat/issues"
+  },
+  "homepage": "https://github.com/dmitryweiner/html-chat#readme",
+  "dependencies": {
+    "@jest/globals": "^26.5.3",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "babel-jest": "^26.5.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "jest": "^26.5.3"
+  },
+  "jest": {
+    "setupFiles": [
+      "./setupTests.js"
+    ]
+  }
+}

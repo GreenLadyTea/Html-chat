@@ -5,10 +5,12 @@ class App extends React.Component
     constructor()
     {
         super();
+
         this.state =
             {
                 serverMessages: []
             };
+
         setInterval(this.getMessages.bind(this), 1000);
     }
 
