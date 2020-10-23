@@ -1,6 +1,7 @@
 import React from 'react';
-import cloud from './cloud.png';
+import Cloud from './cloud.png';
+import styles from './style.css';
 
 export default () => {
-    return <img src={cloud} />;
+    return <img src={Cloud} className="cloud-picture"/>;
 };

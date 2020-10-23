@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
 import MessagesList from './components/MessagesList';
-import CatPicture from './components/cloud';
+import Cloud from './components/cloud';
 const URL = 'http://localhost:3000';
 
 class App extends React.Component
@@ -71,8 +71,7 @@ class App extends React.Component
         const {serverMessages} = this.state;
         return <>
             <h1>Чат</h1>
-            <img src="components/cloud/cloud.png" style={{width: "200px"}}/>
-            <CatPicture/>
+            <Cloud/>
             <Form postMessage={(newMessage) => this.postMessage(newMessage)}/>
             <MessagesList messages={serverMessages}/>
         </>

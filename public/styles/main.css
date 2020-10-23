@@ -7,3 +7,9 @@ body{
     background-size: cover;
     background-attachment: fixed;
 }
+
+.list-of-messages {
+    margin-left: 40%;
+    font-size: 25pt;
+}
+

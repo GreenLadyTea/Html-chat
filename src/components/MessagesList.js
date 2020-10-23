@@ -5,7 +5,7 @@ class MessagesList extends React.Component {
     render()
     {
         const { messages } = this.props;
-        return  <div>
+        return  <div className="list-of-messages">
             {messages.map((message, index) => (
                 <Message nick={message.nick} message={message.message} key={index}/>
                 ))}
