@@ -1,4 +1,5 @@
 import React from 'react';
+import style from './style.css';
 
 class Form extends React.Component {
     constructor() {
@@ -22,7 +23,7 @@ class Form extends React.Component {
 
     render() {
         const { nick, message } = this.state;
-        return <form>
+        return <form className="inputs">
             <input
                 value={nick}
                 type="text"

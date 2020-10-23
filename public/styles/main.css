@@ -1,5 +1,7 @@
 h1 {
-    color: #a2a2a2;
+    color: darkslateblue;
+    margin-left: 20%;
+    font-size: 28pt;
 }
 
 body{
@@ -9,7 +11,7 @@ body{
 }
 
 .list-of-messages {
-    margin-left: 40%;
+    margin-left: 20%;
     font-size: 25pt;
 }
 

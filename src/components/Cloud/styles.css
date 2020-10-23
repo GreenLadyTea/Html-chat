@@ -1,5 +1,6 @@
 .cloud-picture {
     width: 10%;
     height: 10%;
-    margin-left: 40%;
+    margin-left: 20%;
+    border: 3px seagreen;
 }
