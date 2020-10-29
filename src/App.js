@@ -1,82 +1,70 @@
-import React from 'react';
-import Form from './components/Form/Form';
-import MessagesList from './components/MessagesList';
-import Cloud from './components/Cloud';
+import React from "react";
+import Form from "./components/Form/Form";
+import MessagesList from "./components/MessagesList";
+import Cloud from "./components/Cloud";
 import Bird from "./components/Bird";
-const URL = 'http://localhost:3000';
+const URL = "http://localhost:3000";
 
-class App extends React.Component
-{
-    constructor()
-    {
-        super();
+class App extends React.Component {
+  constructor() {
+    super();
 
-        this.state =
-            {
-                serverMessages: []
-            };
+    this.state = {
+      serverMessages: []
+    };
 
-        setInterval(this.getMessages.bind(this), 1000);
+    setInterval(this.getMessages.bind(this), 1000);
+  }
+
+  postMessage(newMessage) {
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", URL);
+    xhr.send(
+      JSON.stringify({
+        nick: newMessage.nick,
+        message: newMessage.message
+      })
+    );
+
+    xhr.onload = () => this.handleOnload(xhr);
+
+    xhr.onerror = function () {
+      console.log("Запрос не удался");
+    };
+  }
+
+  getMessages() {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", URL);
+    xhr.send();
+    xhr.onload = () => this.handleOnload(xhr);
+  }
+
+  handleOnload(xhr) {
+    if (xhr.status !== 200) {
+      console.error("Ошибка!");
+    } else {
+      this.parseMessages(xhr.response);
     }
+  }
 
-    postMessage(newMessage)
-    {
-        let xhr = new XMLHttpRequest();
+  parseMessages(response) {
+    const newServerMessages = JSON.parse(response);
+    this.setState({ serverMessages: newServerMessages });
+  }
 
-        xhr.open('POST', URL);
-        xhr.send(JSON.stringify(
-            {
-                nick: newMessage.nick,
-                message: newMessage.message
-            }));
-
-        xhr.onload = () => {
-            if (xhr.status !== 200) {
-                console.error('Ошибка!');
-            } else {
-                this.parseMessages(xhr.response);
-            }
-        };
-
-        xhr.onerror = function() {
-            console.log('Запрос не удался');
-        }
-    }
-
-    getMessages()
-    {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', URL);
-        xhr.send();
-        xhr.onload = () =>
-        {
-            if (xhr.status !== 200)
-            {
-                console.error('Ошибка!');
-            } else {
-                    this.parseMessages(xhr.response);
-            }
-        };
-    }
-
-    parseMessages(response)
-    {
-        const newServerMessages = JSON.parse(response);
-        this.setState({
-            serverMessages: newServerMessages
-        })
-    }
-
-    render()
-    {
-        const {serverMessages} = this.state;
-        return <>
-            <h1>Чат</h1>
-            <Cloud/>
-            <Form postMessage={(newMessage) => this.postMessage(newMessage)}/>
-            <MessagesList messages={serverMessages}/>
-            <Bird/>
-        </>
-     }
+  render() {
+    const { serverMessages } = this.state;
+    return (
+      <>
+        <h1>Чат</h1>
+        <Cloud />
+        <Form postMessage={(newMessage) => this.postMessage(newMessage)} />
+        <MessagesList messages={serverMessages} />
+        <Bird />
+      </>
+    );
+  }
 }
 export default App;

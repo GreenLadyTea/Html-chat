@@ -8,7 +8,7 @@ describe("MessagesList", () => {
   test("Add 2 new messages", () => {
     const messages = [
       { user: "user1", message: "Message from user1" },
-      { user: "user2", message: "Message from user2" },
+      { user: "user2", message: "Message from user2" }
     ];
     const component = shallow(<MessagesList messages={messages} />);
     expect(component.find("Message")).toHaveLength(2);
@@ -16,11 +16,9 @@ describe("MessagesList", () => {
   test("Snap in-line", () => {
     const messages = [
       { user: "user1", message: "Message from user1" },
-      { user: "user2", message: "Message from user2" },
+      { user: "user2", message: "Message from user2" }
     ];
-    const component = renderer
-      .create(<MessagesList messages={messages} />)
-      .toJSON();
+    const component = renderer.create(<MessagesList messages={messages} />).toJSON();
     expect(component).toMatchInlineSnapshot(`
       <div
         className="list-of-messages"
