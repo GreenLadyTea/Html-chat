@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles.css";
 
 class Form extends React.Component {
   constructor() {
@@ -26,10 +27,7 @@ class Form extends React.Component {
       <form className="inputs">
         <input value={nick} type="text" onChange={(e) => this.setState({ nick: e.target.value })} />
         <br />
-        <textarea
-          value={message}
-          onChange={(e) => this.setState({ message: e.target.value })}
-        ></textarea>
+        <textarea value={message} onChange={(e) => this.setState({ message: e.target.value })} />
         <br />
         <input type="button" value="отправить" onClick={() => this.handleSend()} />
       </form>
