@@ -4,7 +4,7 @@
   "description": "testik chatika",
   "main": "src/main.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "start": "node server.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./configs/webpack.development.js",
     "build": "cross-env NODE_ENV=production webpack --config ./configs/webpack.production.js"
@@ -58,6 +58,8 @@
     "transform": {
       "^.+\\.js$": "babel-jest",
       ".+\\.(css|styl|less|sass|scss)$": "jest-transform-css"
-    }
+    },
+    "collectCoverage": true,
+    "coverageReporters": ["html"]
   }
 }
