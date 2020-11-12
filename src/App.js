@@ -1,70 +1,30 @@
 import React from "react";
-import Form from "./components/Form/Form";
-import MessagesList from "./components/MessagesList";
-import Cloud from "./components/Cloud";
-import Bird from "./components/Bird";
-const URL = "http://localhost:3000";
+import { Switch, Route, Redirect, Link } from "react-router-dom";
+import LoginView from "./views/LoginView";
+import RegistrationView from "./views/RegistrationView";
+import ChatView from "./views/ChatView";
+import "./App.css";
 
-class App extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      serverMessages: []
-    };
-
-    setInterval(this.getMessages.bind(this), 1000);
-  }
-
-  postMessage(newMessage) {
-    let xhr = new XMLHttpRequest();
-
-    xhr.open("POST", URL);
-    xhr.send(
-      JSON.stringify({
-        nick: newMessage.nick,
-        message: newMessage.message
-      })
-    );
-
-    xhr.onload = () => this.handleOnload(xhr);
-
-    xhr.onerror = function () {
-      console.log("Запрос не удался");
-    };
-  }
-
-  getMessages() {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", URL);
-    xhr.send();
-    xhr.onload = () => this.handleOnload(xhr);
-  }
-
-  handleOnload(xhr) {
-    if (xhr.status !== 200) {
-      console.error("Ошибка!");
-    } else {
-      this.parseMessages(xhr.response);
-    }
-  }
-
-  parseMessages(response) {
-    const newServerMessages = JSON.parse(response);
-    this.setState({ serverMessages: newServerMessages });
-  }
-
+export default class App extends React.Component {
   render() {
-    const { serverMessages } = this.state;
     return (
       <>
-        <h1>Чат</h1>
-        <Cloud />
-        <Form postMessage={(newMessage) => this.postMessage(newMessage)} />
-        <MessagesList messages={serverMessages} />
-        <Bird />
+        <span>
+          <Link to="/login">Логин</Link>
+        </span>
+        <span>
+          <Link to="/registration">Регистрация</Link>
+        </span>
+        <span>
+          <Link to="/chat">Чат</Link>
+        </span>
+        <Switch>
+          <Route path="/login" component={LoginView} />
+          <Route path="/registration" component={RegistrationView} />
+          <Route path="/chat" component={ChatView} />
+          <Redirect exact from="/" to="/login" />
+        </Switch>
       </>
     );
   }
 }
-export default App;
