@@ -1,9 +1,5 @@
 import React from "react";
-import axios from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001"
-});
+import apiService from "../apiService";
 
 export default class ProfileView extends React.Component {
   constructor(props) {
@@ -15,8 +11,8 @@ export default class ProfileView extends React.Component {
   }
 
   componentDidMount() {
-    axiosInstance
-      .get("/user")
+    apiService.user
+      .getProfile()
       .then((response) => response.data)
       .then((user) => this.setState({ user }))
       .catch((error) => this.setState({ errorMessage: "Ошибка: " + error.response.data.error }));

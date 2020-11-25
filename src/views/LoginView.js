@@ -1,9 +1,5 @@
 import React from "react";
-import axios from "axios";
-
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001"
-});
+import apiService from "../apiService";
 
 export default class LoginView extends React.Component {
   constructor(props) {
@@ -23,8 +19,8 @@ export default class LoginView extends React.Component {
       errorMessage: "",
       successMessage: ""
     });
-    axiosInstance
-      .post("/auth", {
+    apiService.auth
+      .login({
         nickname: nickname,
         password: password
       })
