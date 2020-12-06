@@ -6,17 +6,17 @@ import { describe, test } from "@jest/globals";
 
 describe("Message component", () => {
   test("Message matches snapshot", () => {
-    const nick = "test";
-    const message = "test";
-    const component = renderer.create(<Message nick={nick} message={message} />).toJSON();
+    const nickname = "test";
+    const content = "test";
+    const component = renderer.create(<Message nickname={nickname} content={content} />).toJSON();
     expect(component).toMatchSnapshot();
   });
 
   test("Message shows nick and message", () => {
-    const nick = "test";
-    const message = "test";
-    const component = shallow(<Message nick={nick} message={message} />);
-    expect(component.text()).toContain(nick);
-    expect(component.text()).toContain(message);
+    const nickname = "test";
+    const content = "test";
+    const component = shallow(<Message nickname={nickname} content={content} />);
+    expect(component.text()).toContain(nickname);
+    expect(component.text()).toContain(content);
   });
 });

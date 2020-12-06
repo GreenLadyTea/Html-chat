@@ -5,16 +5,13 @@ import { describe, jest, test } from "@jest/globals";
 
 describe("MessageForm", () => {
   test("runs callback with proper values", () => {
-    const message = "Message";
-    const nick = "Nick";
+    const content = "Content";
     const handler = jest.fn();
     const component = shallow(<MessageForm postMessage={handler} />);
-    component.find('input[type="text"]').simulate("change", { target: { value: nick } });
-    component.find("textarea").simulate("change", { target: { value: message } });
-    component.find('input[type="button"]').simulate("click");
+    component.find('input[type="text"]').simulate("change", { target: { value: content } });
+    component.find('button[type="submit"]').simulate("click");
     expect(handler).toHaveBeenCalledWith({
-      nick,
-      message
+      content
     });
   });
 });

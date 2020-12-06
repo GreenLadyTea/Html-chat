@@ -10,11 +10,13 @@ export default class ChatView extends React.Component {
     super();
     this.timer = null;
     this.state = {
-      messages: []
+      messages: [],
+      users: []
     };
   }
 
   componentDidMount() {
+    this.setState({ users: [], messages: [] });
     this.timer = setInterval(this.getMessages.bind(this), 1000);
   }
 
@@ -25,16 +27,36 @@ export default class ChatView extends React.Component {
   postMessage({ content }) {
     apiService.message
       .create({ content, chatId: this.props.match.params.id })
-      .then(() => apiService.message.getMessages(this.props.match.params.id))
-      .then((response) => response.data)
-      .then((messages) => this.setState({ messages }));
+      .then(() => this.getMessages());
   }
 
   getMessages() {
     apiService.message
       .getMessages(this.props.match.params.id)
       .then((response) => response.data)
-      .then((messages) => this.setState({ messages }));
+      .then((messages) => this.setState({ messages }))
+      .then(() => this.getUsers())
+      .then(() => {
+        const newMessages = this.state.messages.map((message) => {
+          const user = this.state.users.find((user) => user.id === message.userId);
+          message.nickname = user.nickname;
+          return message;
+        });
+        this.setState({ messages: newMessages });
+      });
+  }
+
+  getUsers() {
+    const oldUsers = this.state.users;
+    const oldUsersIds = oldUsers.map((user) => user.id);
+    const newUsersIds = this.state.messages.map((message) => message.userId);
+    const toLoad = newUsersIds.filter((id) => !oldUsersIds.includes(id));
+
+    if (!toLoad.length) return;
+
+    return Promise.all(toLoad.map((id) => apiService.user.getById(id)))
+      .then((responses) => responses.map((response) => response.data))
+      .then((newUsers) => this.setState({ users: [...oldUsers, ...newUsers] }));
   }
 
   render() {
@@ -43,7 +65,7 @@ export default class ChatView extends React.Component {
       <>
         <h1>Чат</h1>
         <Cloud />
-        <MessageForm postMessage={(newMessage) => this.postMessage(newMessage)} />
+        <MessageForm postMessage={(data) => this.postMessage(data)} />
         <MessagesList messages={messages} />
         <Bird />
       </>

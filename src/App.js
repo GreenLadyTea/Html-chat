@@ -19,9 +19,6 @@ export default class App extends React.Component {
         <span>
           <Link to="/profile">Профиль</Link>
         </span>
-        <span>
-          <Link to="/chat">Чат</Link>
-        </span>
         <Switch>
           <Route path="/login" component={LoginView} />
           <Route path="/registration" component={RegistrationView} />

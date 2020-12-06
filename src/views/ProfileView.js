@@ -17,7 +17,8 @@ export default class ProfileView extends React.Component {
       .getCurrent()
       .then((response) => response.data)
       .then((user) => this.setState({ user }))
-      .then(() => this.getChatList());
+      .then(() => this.getChatList())
+      .then((chats) => this.setState({ chats }));
   }
 
   handleCreateChat({ title }) {
