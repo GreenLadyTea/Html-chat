@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "../components/Form/Form";
+import MessageForm from "../components/MessageForm/MessageForm";
 import MessagesList from "../components/MessagesList";
 import Cloud from "../components/Cloud";
 import Bird from "../components/Bird";
@@ -67,7 +67,7 @@ export default class ChatView extends React.Component {
       <>
         <h1>Чат</h1>
         <Cloud />
-        <Form postMessage={(newMessage) => this.postMessage(newMessage)} />
+        <MessageForm postMessage={(newMessage) => this.postMessage(newMessage)} />
         <MessagesList messages={serverMessages} />
         <Bird />
       </>

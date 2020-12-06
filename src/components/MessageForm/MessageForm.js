@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-class Form extends React.Component {
+class MessageForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -35,4 +35,4 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+export default MessageForm;

@@ -1,5 +1,6 @@
 import React from "react";
 import apiService from "../apiService";
+import styles from "./RegistrationView.module.css";
 
 export default class RegistrationView extends React.Component {
   constructor(props) {
@@ -12,6 +13,31 @@ export default class RegistrationView extends React.Component {
     };
   }
 
+  validate() {
+    if (this.state.nickname.length === 0) {
+      this.setState({
+        errorMessage: "Введите никнейм"
+      });
+      return false;
+    }
+
+    if (this.state.password.length === 0) {
+      this.setState({
+        errorMessage: "Введите пароль"
+      });
+      return false;
+    }
+
+    if (this.state.password.length < 7) {
+      this.setState({
+        errorMessage: "Длина пароля должна быть 7 и более символов"
+      });
+      return false;
+    }
+
+    return true;
+  }
+
   handleSubmit(event) {
     const { nickname, password } = this.state;
     event.preventDefault();
@@ -19,6 +45,9 @@ export default class RegistrationView extends React.Component {
       errorMessage: "",
       successMessage: ""
     });
+
+    if (!this.validate()) return;
+
     apiService.user
       .create({
         nickname: nickname,
@@ -36,7 +65,7 @@ export default class RegistrationView extends React.Component {
     return (
       <>
         <h1>Регистрация</h1>
-        {errorMessage}
+        {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         {successMessage}
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <div>
