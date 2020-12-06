@@ -1,10 +1,15 @@
+@font-face {
+    font-family: 'LaCartoonerie';
+    src: url('../fonts/LaCartoonerie.ttf');
+}
+
 h1 {
     color: darkslateblue;
     margin-left: 20%;
     font-size: 28pt;
 }
 
-body{
+body {
     background-image: url(../images/chat_background.jpg);
     background-size: cover;
     background-attachment: fixed;
@@ -13,5 +18,12 @@ body{
 .list-of-messages {
     margin-left: 20%;
     font-size: 25pt;
+}
+
+li {
+    margin: 10px;
+    font-family: 'LaCartoonerie', fantasy;
+    font-size: 30pt;
+    color: midnightblue;
 }
 
