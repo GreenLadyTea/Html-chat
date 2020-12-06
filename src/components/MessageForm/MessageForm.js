@@ -2,34 +2,34 @@ import React from "react";
 import "./styles.css";
 
 class MessageForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      nick: "",
-      message: ""
+      content: ""
     };
   }
 
-  handleSend() {
+  handleSend(event) {
+    event.preventDefault();
     this.props.postMessage({
-      nick: this.state.nick,
-      message: this.state.message
+      content: this.state.content
     });
     this.setState({
-      nick: "",
-      message: ""
+      content: ""
     });
   }
 
   render() {
-    const { nick, message } = this.state;
+    const { content } = this.state;
     return (
-      <form className="inputs">
-        <input value={nick} type="text" onChange={(e) => this.setState({ nick: e.target.value })} />
+      <form className="inputs" onSubmit={(event) => this.handleSend(event)}>
+        <input
+          value={content}
+          type="text"
+          onChange={(e) => this.setState({ content: e.target.value })}
+        />
         <br />
-        <textarea value={message} onChange={(e) => this.setState({ message: e.target.value })} />
-        <br />
-        <input type="button" value="отправить" onClick={() => this.handleSend()} />
+        <button type="submit">отправить</button>
       </form>
     );
   }

@@ -3,15 +3,14 @@ import MessageForm from "../components/MessageForm/MessageForm";
 import MessagesList from "../components/MessagesList";
 import Cloud from "../components/Cloud";
 import Bird from "../components/Bird";
-
-const URL = "http://localhost:3000";
+import apiService from "../apiService";
 
 export default class ChatView extends React.Component {
   constructor() {
     super();
     this.timer = null;
     this.state = {
-      serverMessages: []
+      messages: []
     };
   }
 
@@ -23,52 +22,29 @@ export default class ChatView extends React.Component {
     clearInterval(this.timer);
   }
 
-  postMessage(newMessage) {
-    let xhr = new XMLHttpRequest();
-
-    xhr.open("POST", URL);
-    xhr.send(
-      JSON.stringify({
-        nick: newMessage.nick,
-        message: newMessage.message
-      })
-    );
-
-    xhr.onload = () => this.handleOnload(xhr);
-
-    xhr.onerror = function () {
-      console.log("Запрос не удался");
-    };
+  postMessage({ content }) {
+    apiService.message
+      .create({ content, chatId: this.props.match.params.id })
+      .then(() => apiService.message.getMessages(this.props.match.params.id))
+      .then((response) => response.data)
+      .then((messages) => this.setState({ messages }));
   }
 
   getMessages() {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", URL);
-    xhr.send();
-    xhr.onload = () => this.handleOnload(xhr);
-  }
-
-  handleOnload(xhr) {
-    if (xhr.status !== 200) {
-      console.error("Ошибка!");
-    } else {
-      this.parseMessages(xhr.response);
-    }
-  }
-
-  parseMessages(response) {
-    const newServerMessages = JSON.parse(response);
-    this.setState({ serverMessages: newServerMessages });
+    apiService.message
+      .getMessages(this.props.match.params.id)
+      .then((response) => response.data)
+      .then((messages) => this.setState({ messages }));
   }
 
   render() {
-    const { serverMessages } = this.state;
+    const { messages } = this.state;
     return (
       <>
         <h1>Чат</h1>
         <Cloud />
         <MessageForm postMessage={(newMessage) => this.postMessage(newMessage)} />
-        <MessagesList messages={serverMessages} />
+        <MessagesList messages={messages} />
         <Bird />
       </>
     );
