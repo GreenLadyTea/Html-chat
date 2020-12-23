@@ -8,11 +8,11 @@ import apiService from "../apiService";
 export default class ChatView extends React.Component {
   constructor() {
     super();
-    this.timer = null;
     this.state = {
       messages: [],
       users: []
     };
+    this.timer = null;
   }
 
   componentDidMount() {
@@ -31,7 +31,7 @@ export default class ChatView extends React.Component {
   }
 
   getMessages() {
-    apiService.message
+    return apiService.message
       .getMessages(this.props.match.params.id)
       .then((response) => response.data)
       .then((messages) => this.setState({ messages }))
@@ -47,10 +47,11 @@ export default class ChatView extends React.Component {
   }
 
   getUsers() {
+    const messages = this.state.messages;
+    const userIds = [...new Set(messages.map((message) => message.userId))];
     const oldUsers = this.state.users;
-    const oldUsersIds = oldUsers.map((user) => user.id);
-    const newUsersIds = this.state.messages.map((message) => message.userId);
-    const toLoad = newUsersIds.filter((id) => !oldUsersIds.includes(id));
+    const oldUserIds = oldUsers.map((user) => user.id);
+    const toLoad = userIds.filter((id) => !oldUserIds.includes(id));
 
     if (!toLoad.length) return;
 

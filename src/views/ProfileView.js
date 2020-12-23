@@ -2,13 +2,15 @@ import React from "react";
 import apiService from "../apiService";
 import ChatForm from "../components/ChatForm";
 import ChatList from "../components/ChatList";
+import SearchChatForm from "../views/SearchChatForm";
 
 export default class ProfileView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user: null,
-      chats: []
+      chats: [],
+      searchChats: []
     };
   }
 
@@ -17,8 +19,7 @@ export default class ProfileView extends React.Component {
       .getCurrent()
       .then((response) => response.data)
       .then((user) => this.setState({ user }))
-      .then(() => this.getChatList())
-      .then((chats) => this.setState({ chats }));
+      .then(() => this.getChatList());
   }
 
   handleCreateChat({ title }) {
@@ -34,6 +35,13 @@ export default class ProfileView extends React.Component {
 
   handleChatClick(id) {
     this.props.history.push(`/chat/${id}`);
+  }
+
+  handleSearchChat({ title }) {
+    apiService.chat
+      .search(title)
+      .then((response) => response.data)
+      .then((searchChats) => this.setState({ searchChats }));
   }
 
   render() {
@@ -53,6 +61,9 @@ export default class ProfileView extends React.Component {
         <h2>Мои чаты</h2>
         <ChatList list={this.state.chats} clickHandle={(id) => this.handleChatClick(id)} />
         <ChatForm handleSubmit={(data) => this.handleCreateChat(data)} />
+
+        <SearchChatForm handleSubmit={(params) => this.handleSearchChat(params)} />
+        <ChatList list={this.state.searchChats} clickHandle={(id) => this.handleChatClick(id)} />
       </>
     );
   }

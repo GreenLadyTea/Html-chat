@@ -1,9 +1,8 @@
 .bird {
-    margin-left: 20%;
+    margin-left: 20px;
 }
 
 .bird img{
-    margin: 20px;
     width: 10%;
     height: 10%;
 }

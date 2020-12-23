@@ -7,22 +7,20 @@ import { describe, test } from "@jest/globals";
 describe("MessagesList", () => {
   test("Add 2 new messages", () => {
     const messages = [
-      { user: "user1", message: "Message from user1" },
-      { user: "user2", message: "Message from user2" }
+      { nick: "user1", content: "Message from user1" },
+      { nick: "user2", content: "Message from user2" }
     ];
     const component = shallow(<MessagesList messages={messages} />);
     expect(component.find("Message")).toHaveLength(2);
   });
   test("Snap in-line", () => {
     const messages = [
-      { user: "user1", message: "Message from user1" },
-      { user: "user2", message: "Message from user2" }
+      { nick: "user1", content: "Message from user1" },
+      { nick: "user2", content: "Message from user2" }
     ];
     const component = renderer.create(<MessagesList messages={messages} />).toJSON();
     expect(component).toMatchInlineSnapshot(`
-      <div
-        className="list-of-messages"
-      >
+      <div>
         <div>
           <b>
             : 

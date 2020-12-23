@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-class MessageForm extends React.Component {
+export default class MessageForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,5 +34,3 @@ class MessageForm extends React.Component {
     );
   }
 }
-
-export default MessageForm;

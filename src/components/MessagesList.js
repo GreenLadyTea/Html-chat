@@ -1,17 +1,15 @@
 import React from "react";
 import Message from "./Message";
 
-class MessagesList extends React.Component {
+export default class MessagesList extends React.Component {
   render() {
     const { messages } = this.props;
     return (
-      <div className="list-of-messages">
+      <div>
         {messages.map((message) => (
-          <Message nick={message.nickname} content={message.content} key={message.id} />
+          <Message content={message.content} nickname={message.nickname} key={message.id} />
         ))}
       </div>
     );
   }
 }
-
-export default MessagesList;

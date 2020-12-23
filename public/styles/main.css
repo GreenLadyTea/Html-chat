@@ -15,9 +15,9 @@ body {
     background-attachment: fixed;
 }
 
-.list-of-messages {
-    margin-left: 20%;
+div {
     font-size: 25pt;
+    font-family: 'LaCartoonerie', fantasy;
 }
 
 li {
